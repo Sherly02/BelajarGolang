@@ -1,17 +1,6 @@
 package com.example.win10.belajargolang.api
 
 import android.util.Log
-import okhttp3.OkHttpClient
-import com.example.win10.belajargolang.api.model.Repo
-import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 private const val TAG = "GithubService"
 //private const val IN_QUALIFIER = "in:name"
@@ -53,10 +42,10 @@ fun searchRepos(
                 ) {
                     Log.d(TAG, "got a response $response")
                     if (response.isSuccessful) {
-                        val repos = response.body()?.items ?: emptyList()
+                        val repos = response.body().items ?: emptyList()
                         onSuccess(repos)
                     } else {
-                        onError(response.errorBody()?.string() ?: "Unknown error")
+                        onError(response.errorBody().string() ?: "Unknown error")
                     }
                 }
             }
@@ -84,7 +73,7 @@ interface GithubService {
 
         fun create(): GithubService {
             val logger = HttpLoggingInterceptor()
-            logger.level = Level.BASIC
+            logger.level = Experimental.Level.BASIC
 
             val client = OkHttpClient.Builder()
                     .addInterceptor(logger)
